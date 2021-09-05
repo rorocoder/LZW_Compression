@@ -136,9 +136,9 @@ public class Encoder {
 					}
 				}
 				//System.out.println(num);
-				this.out.write(num);//we "print" here, (putting it in the outputstream
 				
-				//System.out.println(num+" "+toBinary8(num));
+				this.out.write((char)num);//we "print" here, (putting it in the outputstream
+				
 				this.count = 0;//reset count so we can have a new binary string inputted
 				//Arrays.fill(this.buffer, false);//resetting our buffer array so it's just 00000000
 			}
@@ -179,7 +179,7 @@ public class Encoder {
 						num += (1<<(7-index));
 					}
 				}
-				this.out.write(num);
+				this.out.write((char)num);
 			}
 
 			this.out.close();

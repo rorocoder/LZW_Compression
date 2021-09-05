@@ -4,7 +4,7 @@ public class Testing {
 
 	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
-		BufferedReader in = new BufferedReader(new FileReader(new File("TestingFile.txt")));
+		FileInputStream in = new FileInputStream("TestingFile.txt");
 		
 		System.out.println(in.read());
 		

@@ -6,22 +6,31 @@ public class Decoder {
 	//public static final int BITS = 12;
 	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
-		BufferedReader in = new BufferedReader(new FileReader(new File("encoded.txt")));//reader
+		FileInputStream in = new FileInputStream("encoded.txt");//reader
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("decoded.txt")));
 		
 		StringBuilder ans = new StringBuilder();
+		byte[] bits = in.readAllBytes();
+		for(int i =0;i<bits.length;i++)
+		{
+			System.out.println(bits[i]+" "+toBinary(bits[i]));
+			out.print(toBinary(bits[i]));
+		}
+		/*
 		while(true)
 		{
 			int inp = in.read();
 			if(inp==-1)
 				break;
-			if(inp==8216)
-				inp = 145;
-			//System.out.println(inp+" "+toBinary(inp));
+			/*if(inp>=256)
+				inp = inp%256;
+				
+			System.out.println(inp+" "+toBinary(inp));
 			//ans.append(toBinary(inp));
 			out.print(toBinary(inp));
 			
-		}
+		}*/
+	
 		/*for(int i =0;i<ans.length();)
 		{
 			if(i+12>=ans.length())
@@ -37,11 +46,15 @@ public class Decoder {
 	}
 	public static String toBinary(int a)
 	{
-		StringBuilder cur = new StringBuilder(Integer.toBinaryString(a));
+		String cur =Integer.toBinaryString(a);
 		StringBuilder ans = new StringBuilder();
 		while(cur.length()+ans.length()<8)
 		{
 			ans.append("0");
+		}
+		if(cur.length()>8)
+		{
+			cur = cur.substring(cur.length()-8);
 		}
 		ans.append(cur);
 		return ans.toString();
