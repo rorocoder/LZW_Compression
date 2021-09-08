@@ -11,6 +11,8 @@ public class Encoder {
 		BufferedReader in = new BufferedReader(new FileReader(new File("original.txt")));//reader
 
 		BitWriter fout = new BitWriter(new FileOutputStream("encoded.txt"));
+		
+		
 		//custom printer class to print bits specifically, but in bytes since we can't print bits	
 
 		HashMap<String,Integer> dict = new HashMap<String, Integer>();//dictionary
@@ -69,7 +71,6 @@ public class Encoder {
 		System.out.println(toBinary(dict.get(cur)));
 
 		fout.close();
-		//out.close();
 		
 	}
 	public static void write(String binary, BitWriter fout) throws IOException
