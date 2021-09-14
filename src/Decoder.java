@@ -27,21 +27,23 @@ public class Decoder {
 			binary.append(toBinary(bits[i]));
 		}
 		
+		System.out.println(binary);
 		int currInt, nextInt;
 		
-		
-		for(int i = 0; i< binary.length()-13; i+=12) 
+		System.out.println(""+binaryToInt("000100000110"));
+		for(int i = 0; i< binary.length()-12; i+=12) 
 		{
 			String currBin = binary.substring(i,i+12);
 			currInt = binaryToInt(currBin);
 			String nextBin = binary.substring(i+12, i+24);
 			nextInt = binaryToInt(nextBin);
-			String currWFirstNext = decodeMap.get(nextInt).substring(0,1);
+			String currWFirstNext = decodeMap.get(nextInt).substring(0,1);// i = 72 and nextInt becomes 262 which doesnt exist yet
 			decodeMap.put(counter++,  "" + decodeMap.get(currInt) + currWFirstNext );
 			
 		}
+		//000100000011
+		//need to have a maximum size?
 		
-		System.out.println("done");
 
 		/*
 		while(true)
