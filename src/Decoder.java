@@ -28,20 +28,32 @@ public class Decoder {
 		}
 		
 		System.out.println(binary);
-		int currInt, nextInt;
+		int currentInt, nextInt;//currentInt = old, nextInt = new
+		String s,c;
+		c = "";
 		
-		System.out.println(""+binaryToInt("000100000110"));
+		//System.out.println(""+binaryToInt("000100000110"));
 		for(int i = 0; i< binary.length()-12; i+=12) 
 		{
-			String currBin = binary.substring(i,i+12);
-			currInt = binaryToInt(currBin);
+			String currentBin = binary.substring(i,i+12);
+			currentInt = binaryToInt(currentBin);
 			String nextBin = binary.substring(i+12, i+24);
-			nextInt = binaryToInt(nextBin);
-			String currWFirstNext = decodeMap.get(nextInt).substring(0,1);// i = 72 and nextInt becomes 262 which doesnt exist yet
-			decodeMap.put(counter++,  "" + decodeMap.get(currInt) + currWFirstNext );
+			nextInt = binaryToInt(nextBin); 
 			
+			if (!decodeMap.containsKey(nextInt)) { // if the key's value doesnt exist
+				s  = decodeMap.get(currentInt); //string/character of current binary 
+				s += c ; // current + first of next (defined below - will defintiley run the else statement first
+				//decodeMap.put(counter++,  "" + s );//add it bc it doesnt exist yet
+			}
+			else {
+				s = decodeMap.get(nextInt); //next binary combo's letter/character/string 
+				
+				//dont have to set old = newInt because reading in binary 12 at a time with for loop
+			}
+			c = s.substring(0,1);  //first character of s
+			decodeMap.put(counter++,  "" + decodeMap.get(currentInt) + c );
 		}
-		//000100000011
+		
 		//need to have a maximum size?
 		
 
