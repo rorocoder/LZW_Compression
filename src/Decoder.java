@@ -2,20 +2,47 @@ import java.util.*;
 import java.io.*;
 public class Decoder {
 
+
 	
 	//public static final int BITS = 12;
 	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
 		FileInputStream in = new FileInputStream("encoded.txt");//reader
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("decoded.txt")));
+		HashMap<Integer,String> decodeMap = new HashMap<Integer,String>();
+		int counter = 0;
 		
-		StringBuilder ans = new StringBuilder();
+		for (int i=0; i<256; i++) //initializing existing ascii values in hashmap
+		{
+			decodeMap.put(counter,String.valueOf((char)(i)));
+			counter++;
+		}
+		
+		StringBuilder binary = new StringBuilder();
 		byte[] bits = in.readAllBytes();
 		for(int i =0;i<bits.length;i++)
 		{
 			System.out.println(bits[i]+" "+toBinary(bits[i]));
 			out.print(toBinary(bits[i]));
+			binary.append(toBinary(bits[i]));
 		}
+		
+		int currInt, nextInt;
+		
+		
+		for(int i = 0; i< binary.length()-13; i+=12) 
+		{
+			String currBin = binary.substring(i,i+12);
+			currInt = binaryToInt(currBin);
+			String nextBin = binary.substring(i+12, i+24);
+			nextInt = binaryToInt(nextBin);
+			String currWFirstNext = decodeMap.get(nextInt).substring(0,1);
+			decodeMap.put(counter++,  "" + decodeMap.get(currInt) + currWFirstNext );
+			
+		}
+		
+		System.out.println("done");
+
 		/*
 		while(true)
 		{
@@ -59,5 +86,14 @@ public class Decoder {
 		ans.append(cur);
 		return ans.toString();
 	}
+	
+	public static int binaryToInt(String binary){
+		
+		return Integer.parseInt(binary,2);
+		
+	}
+	
 
+
+	
 }
