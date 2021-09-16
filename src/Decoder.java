@@ -30,15 +30,22 @@ public class Decoder {
 		
 		//start rebuilding dictionary
 		int currentInt, nextInt;//currentInt = old, nextInt = new
-		String s,c;
+		String s,c, nextBin, currentBin;
 		c = "";
 		
-		for(int i = 0; i< binary.length()-12; i+=12) 
+		for(int i = 0; i<= binary.length()-12; i+=12) 
 		{
-			String currentBin = binary.substring(i,i+12);
+			
+			currentBin = binary.substring(i,i+12);
 			currentInt = binaryToInt(currentBin);
-			String nextBin = binary.substring(i+12, i+24);
-			nextInt = binaryToInt(nextBin); 
+			if(i+24 <= binary.length()-1) {
+				 nextBin = binary.substring(i+12, i+24);
+			}
+			else {
+				nextBin = binary.substring(i+12, binary.length());
+			}
+				nextInt = binaryToInt(nextBin); 	
+		
 			
 			if (!decodeMap.containsKey(nextInt)) { // if the key's value doesnt exist
 				s  = decodeMap.get(currentInt); //string/character of current binary 
