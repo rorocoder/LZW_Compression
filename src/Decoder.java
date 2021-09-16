@@ -18,21 +18,21 @@ public class Decoder {
 			counter++;
 		}
 		
+		//bits to binary
 		StringBuilder binary = new StringBuilder();
 		byte[] bits = in.readAllBytes();
 		for(int i =0;i<bits.length;i++)
 		{
 			System.out.println(bits[i]+" "+toBinary(bits[i]));
-			out.print(toBinary(bits[i]));
+			//out.print(toBinary(bits[i]));
 			binary.append(toBinary(bits[i]));
 		}
 		
-		System.out.println(binary);
+		//start rebuilding dictionary
 		int currentInt, nextInt;//currentInt = old, nextInt = new
 		String s,c;
 		c = "";
 		
-		//System.out.println(""+binaryToInt("000100000110"));
 		for(int i = 0; i< binary.length()-12; i+=12) 
 		{
 			String currentBin = binary.substring(i,i+12);
@@ -52,11 +52,15 @@ public class Decoder {
 			}
 			c = s.substring(0,1);  //first character of s
 			decodeMap.put(counter++,  "" + decodeMap.get(currentInt) + c );
+			out.print(decodeMap.get(currentInt));
 		}
 		
 		//need to have a maximum size?
 		
-
+	//	https://www.geeksforgeeks.org/lzw-lempel-ziv-welch-compression-technique/
+		
+		
+		
 		/*
 		while(true)
 		{
@@ -82,6 +86,7 @@ public class Decoder {
 			out.println(ans.substring(i,i+12));
 			i = i+12;
 		}*/
+		
 		out.close();
 
 	}
