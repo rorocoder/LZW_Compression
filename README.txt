@@ -10,3 +10,6 @@ do the decoding algorithm.
 
 There's also a bunch of explanation about BitWriter, a writer class I made to write bits out, so you can
 look at the comments for that if you want.
+
+
+UPDATE: Decoder works in conjunction with Encoder for all three test files. Modeled after GeekforGeeks algorithm. - Rhea 
