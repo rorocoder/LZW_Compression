@@ -4,13 +4,14 @@ public class Encoder {
 
 
 	public static final int BITS = 12;//amount of bits that something will take up
+	
 	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
 
 
-		BufferedReader in = new BufferedReader(new FileReader(new File("original.txt")));//reader
+		BufferedReader fileInput = new BufferedReader(new FileReader(new File("original.txt")));//reader
 
-		BitWriter fout = new BitWriter(new FileOutputStream("encoded.txt"));
+		BitWriter fileOutput = new BitWriter(new FileOutputStream("encoded.txt"));
 		
 		
 		//custom printer class to print bits specifically, but in bytes since we can't print bits	
@@ -23,57 +24,56 @@ public class Encoder {
 			dict.put(""+(char)i, i);
 		}
 
-		String cur = "";
+		String current = "";
 		String next = "";
 
 
 		//starting input
-		int inp = in.read();//read gives a number for the character or -1 if there's nothing left
-		if(inp==-1)
+		int input = fileInput.read();//read gives a number for the character or -1 if there's nothing left
+		if(input==-1)
 		{
 			System.out.println("Nothing in the file");
 			return; //stops the program if there's no text in the file
 		}
-		cur = ""+((char)inp);
+		current = ""+((char)input);
 
-		int newestInd = 256;//newest index to use to put in dictionary
+		int newestIndex = 256;//newest index to use to put in dictionary
 		while(true)
 		{
-			inp = in.read();
-			if(inp==-1)
+			input = fileInput.read();
+			if(input==-1)//input is -1 if at the end
 				break;//stops reading if there's no more text to read
 
 
-			next = ""+(char)inp;
+			next = ""+(char)input;
 
-			String combine = cur+next;
+			String combine = current+next;
 
-			if(dict.containsKey(combine))//if we already have seen cur+next
+			if(dict.containsKey(combine))//if we already have seen current+next
 			{
-				cur = combine;
+				current = combine; //set the current to combined
 			}
 			else
 			{
-				//System.out.println(dict.get(cur));
 
-				System.out.print(toBinary(dict.get(cur)));
+				//System.out.print(toBinary(dict.get(current)));
 
-				write(toBinary(dict.get(cur)),fout);
+				write(toBinary(dict.get(current)),fileOutput); //writes out binary versions of our numbers to encodex.txt
 
-				dict.put(combine, newestInd);
-				newestInd++;
+				dict.put(combine, newestIndex); //adds combined to dictionary
+				newestIndex++;
 
-				cur = next;
+				current = next;
 			}
 
 		}
-		write(toBinary(dict.get(cur)),fout);
-		System.out.println(toBinary(dict.get(cur)));
+		write(toBinary(dict.get(current)),fileOutput); //writes the last item?
+		System.out.println(toBinary(dict.get(current)));
 
-		fout.close();
+		fileOutput.close();
 		
 	}
-	public static void write(String binary, BitWriter fout) throws IOException
+	public static void write(String binary, BitWriter fout) throws IOException //writes things to the file as binary
 	{
 		for(int i =0;i<binary.length();i++)
 		{
