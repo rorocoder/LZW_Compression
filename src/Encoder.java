@@ -7,8 +7,8 @@ public class Encoder {
 	
 	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
-
-
+		final long startTime = System.currentTimeMillis();
+		
 		BufferedReader fileInput = new BufferedReader(new FileReader(new File("original.txt")));//reader
 
 		BitWriter fileOutput = new BitWriter(new FileOutputStream("encoded.txt"));
@@ -71,6 +71,10 @@ public class Encoder {
 		System.out.println(toBinary(dict.get(current)));
 
 		fileOutput.close();
+		
+		final long endTime = System.currentTimeMillis();
+
+		System.out.println("Total encoder execution time: " + (endTime - startTime));
 		
 	}
 	public static void write(String binary, BitWriter fout) throws IOException //writes things to the file as binary
