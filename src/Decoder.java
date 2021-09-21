@@ -8,6 +8,7 @@ public class Decoder {
 	public static void main(String[] args) throws IOException{
 		
 		final long startTime = System.currentTimeMillis();
+		
 		// TODO Auto-generated method stub
 		FileInputStream in = new FileInputStream("encoded.txt");//reader
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("decoded.txt")));
@@ -25,7 +26,7 @@ public class Decoder {
 		byte[] bits = in.readAllBytes();
 		for(int i =0;i<bits.length;i++)
 		{
-			System.out.println(bits[i]+" "+toBinary(bits[i]));
+			//System.out.println(bits[i]+" "+toBinary(bits[i]));
 			//out.print(toBinary(bits[i]));
 			binary.append(toBinary(bits[i]));
 		}
@@ -97,9 +98,11 @@ public class Decoder {
 		}*/
 		
 		out.close();
+		in.close();
+		
 		
 		final long endTime = System.currentTimeMillis();
-
+		System.out.println("Original time was 5");
 		System.out.println("Total decoder execution time: " + (endTime - startTime));
 
 	}

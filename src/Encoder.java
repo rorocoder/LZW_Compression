@@ -24,8 +24,10 @@ public class Encoder {
 			dict.put(""+(char)i, i);
 		}
 
-		String current = "";
-		String next = "";
+//		String current = "";
+//		String next = "";
+		StringBuilder current = new StringBuilder();
+		StringBuilder next = new StringBuilder();
 
 
 		//starting input
@@ -35,7 +37,10 @@ public class Encoder {
 			System.out.println("Nothing in the file");
 			return; //stops the program if there's no text in the file
 		}
-		current = ""+((char)input);
+		//current = ""+((char)input);
+		current.replace(0, current.length(),""+(char)input);
+		
+		
 
 		int newestIndex = 256;//newest index to use to put in dictionary
 		while(true)
@@ -45,21 +50,26 @@ public class Encoder {
 				break;//stops reading if there's no more text to read
 
 
-			next = ""+(char)input;
+			//next = ""+(char)input;
+			next.replace(0, next.length(), ""+(char)input);
 
-			String combine = current+next;
+			//String combine = current + next;
+			String combine = current.toString() + next.toString();
 
 			if(dict.containsKey(combine))//if we already have seen current+next
 			{
-				current = combine; //set the current to combined
+				//current = combine; //set the current to combined
+				current.replace(0, current.length(), combine);
 			}
 			else
 			{
 
-				//System.out.print(toBinary(dict.get(current)));
+				//System.out.print(toBinary(dict.get(current.toString())));
 
-				write(toBinary(dict.get(current)),fileOutput); //writes out binary versions of our numbers to encodex.txt
-
+				//write(toBinary(dict.get(current)),fileOutput); //writes out binary versions of our numbers to encodex.txt
+				write(toBinary(dict.get(current.toString())),fileOutput);
+				
+				
 				dict.put(combine, newestIndex); //adds combined to dictionary
 				newestIndex++;
 
@@ -67,14 +77,18 @@ public class Encoder {
 			}
 
 		}
-		write(toBinary(dict.get(current)),fileOutput); //writes the last item?
-		System.out.println(toBinary(dict.get(current)));
+		//write(toBinary(dict.get(current)),fileOutput); //writes the last item?
+		write(toBinary(dict.get(current.toString())),fileOutput);
+		
+		//System.out.println(toBinary(dict.get(current)));
+		//System.out.println(toBinary(dict.get(current.toString())));
 
 		fileOutput.close();
 		
 		final long endTime = System.currentTimeMillis();
 
 		System.out.println("Total encoder execution time: " + (endTime - startTime));
+		System.out.println("Original time was about 15-17");
 		
 	}
 	public static void write(String binary, BitWriter fout) throws IOException //writes things to the file as binary
