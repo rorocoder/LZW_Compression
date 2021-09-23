@@ -3,7 +3,7 @@ import java.io.*;
 public class Encoder {
 
 
-	public static final int BITS = 12;//amount of bits that something will take up
+	public static final int BITS = 12;//amount of bits that something will take up. Max encoded entries file size
 	
 	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
