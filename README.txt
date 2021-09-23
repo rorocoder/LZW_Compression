@@ -13,3 +13,7 @@ look at the comments for that if you want.
 
 
 UPDATE: Decoder works in conjunction with Encoder for all three test files. Modeled after GeekforGeeks algorithm. - Rhea 
+
+UPDATE (Rohan): Both classes are a bit faster now. Changed some variable names,
+got rid of unecessary code, changed some strings to stringbuilders
+and added error handling
