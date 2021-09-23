@@ -9,86 +9,95 @@ public class Encoder {
 		// TODO Auto-generated method stub
 		final long startTime = System.currentTimeMillis();
 		
-		BufferedReader fileInput = new BufferedReader(new FileReader(new File("original.txt")));//reader
+		BufferedReader fileInput;
+		try {
+			fileInput = new BufferedReader(new FileReader(new File("original.txt")));
+			
+			//reader
 
-		BitWriter fileOutput = new BitWriter(new FileOutputStream("encoded.txt"));
-		
-		
-		//custom printer class to print bits specifically, but in bytes since we can't print bits	
+			BitWriter fileOutput = new BitWriter(new FileOutputStream("encoded.txt"));
+			
+			
+			//custom printer class to print bits specifically, but in bytes since we can't print bits	
 
-		HashMap<String,Integer> dict = new HashMap<String, Integer>();//dictionary
+			HashMap<String,Integer> dict = new HashMap<String, Integer>();//dictionary
 
-		//initialize table
-		for(int i = 0;i<256;i++)
-		{
-			dict.put(""+(char)i, i);
-		}
-
-//		String current = "";
-//		String next = "";
-		StringBuilder current = new StringBuilder();
-		StringBuilder next = new StringBuilder();
-
-
-		//starting input
-		int input = fileInput.read();//read gives a number for the character or -1 if there's nothing left
-		if(input==-1)
-		{
-			System.out.println("Nothing in the file");
-			return; //stops the program if there's no text in the file
-		}
-		//current = ""+((char)input);
-		current.replace(0, current.length(),""+(char)input);
-		
-		
-
-		int newestIndex = 256;//newest index to use to put in dictionary
-		while(true)
-		{
-			input = fileInput.read();
-			if(input==-1)//input is -1 if at the end
-				break;//stops reading if there's no more text to read
-
-
-			//next = ""+(char)input;
-			next.replace(0, next.length(), ""+(char)input);
-
-			//String combine = current + next;
-			String combine = current.toString() + next.toString();
-
-			if(dict.containsKey(combine))//if we already have seen current+next
+			//initialize table
+			for(int i = 0;i<256;i++)
 			{
-				//current = combine; //set the current to combined
-				current.replace(0, current.length(), combine);
-			}
-			else
-			{
-
-				//System.out.print(toBinary(dict.get(current.toString())));
-
-				//write(toBinary(dict.get(current)),fileOutput); //writes out binary versions of our numbers to encodex.txt
-				write(toBinary(dict.get(current.toString())),fileOutput);
-				
-				
-				dict.put(combine, newestIndex); //adds combined to dictionary
-				newestIndex++;
-
-				current = next;
+				dict.put(""+(char)i, i);
 			}
 
-		}
-		//write(toBinary(dict.get(current)),fileOutput); //writes the last item?
-		write(toBinary(dict.get(current.toString())),fileOutput);
-		
-		//System.out.println(toBinary(dict.get(current)));
-		//System.out.println(toBinary(dict.get(current.toString())));
+//			String current = "";
+//			String next = "";
+			StringBuilder current = new StringBuilder();
+			StringBuilder next = new StringBuilder();
 
-		fileOutput.close();
+
+			//starting input
+			int input = fileInput.read();//read gives a number for the character or -1 if there's nothing left
+			if(input==-1)
+			{
+				System.out.println("Nothing in the file");
+				return; //stops the program if there's no text in the file
+			}
+			//current = ""+((char)input);
+			current.replace(0, current.length(),""+(char)input);
+			
+			
+
+			int newestIndex = 256;//newest index to use to put in dictionary
+			while(true)
+			{
+				input = fileInput.read();
+				if(input==-1)//input is -1 if at the end
+					break;//stops reading if there's no more text to read
+
+
+				//next = ""+(char)input;
+				next.replace(0, next.length(), ""+(char)input);
+
+				//String combine = current + next;
+				String combine = current.toString() + next.toString();
+
+				if(dict.containsKey(combine))//if we already have seen current+next
+				{
+					//current = combine; //set the current to combined
+					current.replace(0, current.length(), combine);
+				}
+				else
+				{
+
+					//System.out.print(toBinary(dict.get(current.toString())));
+
+					//write(toBinary(dict.get(current)),fileOutput); //writes out binary versions of our numbers to encodex.txt
+					write(toBinary(dict.get(current.toString())),fileOutput);
+					
+					
+					dict.put(combine, newestIndex); //adds combined to dictionary
+					newestIndex++;
+
+					current = next;
+				}
+
+			}
+			//write(toBinary(dict.get(current)),fileOutput); //writes the last item?
+			write(toBinary(dict.get(current.toString())),fileOutput);
+			
+			//System.out.println(toBinary(dict.get(current)));
+			//System.out.println(toBinary(dict.get(current.toString())));
+
+			fileOutput.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Your input fie was not found");
+			
+		}
 		
 		final long endTime = System.currentTimeMillis();
 
 		System.out.println("Total encoder execution time: " + (endTime - startTime));
-		System.out.println("Original time was about 15-17");
+		System.out.println("Original time was about 17");
 		
 	}
 	public static void write(String binary, BitWriter fout) throws IOException //writes things to the file as binary
